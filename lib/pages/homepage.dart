@@ -18,6 +18,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     auth = FirebaseAuth.instance;
+    auth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        debugPrint('Kullanici Oturumu Kapali');
+      } else {
+        debugPrint(
+            'Kullanici Oturumu acik ${user.email} e-mail durumu: ${user.emailVerified}');
+      }
+    });
   }
 
   @override
@@ -27,33 +35,54 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Flutter FireBase'),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              onPressed: () {
+                createUserEmailAndPassword();
+              },
+              child: const Text(
+                "E-mail / Sifre Kayit",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            onPressed: () {
-              createUserEmailAndPassword();
-            },
-            child: const Text(
-              "E-mail / Sifre Kayit",
-              style: TextStyle(color: Colors.white),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+              onPressed: () {
+                loginUserEmailAndPassword();
+              },
+              child: const Text(
+                "Giris ",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-            onPressed: () {
-              loginUserEmailAndPassword();
-            },
-            child: const Text(
-              "Giris ",
-              style: TextStyle(color: Colors.white),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+              onPressed: () {
+                signOutUser();
+              },
+              child: const Text(
+                "Cikis ",
+                style: TextStyle(color: Colors.red),
+              ),
             ),
-          ),
-        ],
-      )),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+              onPressed: () {
+                deleteUser();
+              },
+              child: const Text(
+                "Hesabi Sil ",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -61,6 +90,13 @@ class _HomePageState extends State<HomePage> {
     try {
       var _userCredential = await auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
+      var myUser = _userCredential.user;
+      if (!myUser!.emailVerified) {
+        await myUser.sendEmailVerification();
+        debugPrint("$_email adresinize Dogrulama maili gelmistir");
+      } else {
+        debugPrint("Kullanicinin maili onaylanmis iligli sayfaya gidebilir...");
+      }
       debugPrint(_userCredential.toString());
     } catch (e) {
       debugPrint(e.toString());
@@ -74,6 +110,18 @@ class _HomePageState extends State<HomePage> {
       debugPrint(_userCredential.toString());
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  void signOutUser() async {
+    await auth.signOut();
+  }
+
+  void deleteUser() async {
+    if (auth.currentUser != null) {
+      await auth.currentUser!.delete();
+    } else {
+      debugPrint("Kullanici Oturum Acmadigi Icin Silinemez");
     }
   }
 }
