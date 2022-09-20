@@ -106,30 +106,82 @@ class _HomePageState extends State<HomePage> {
               width: 250,
               height: 40,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                  ),
-                  onPressed: () {
-                    googleIleGiris();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.g_mobiledata_outlined,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        "Google Ile Giris",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  )),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: () {
+                  googleIleGiris();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.g_mobiledata_outlined,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      "Google Ile Giris",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 250,
+              height: 40,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: () {
+                  loginWithPhoneNumber();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.phone,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      "Telefon Ile Giris",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void loginWithPhoneNumber() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+905494471997',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        debugPrint("verificationCompleted Tetiklendi");
+        debugPrint(credential.toString());
+        await auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        debugPrint(e.toString());
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        String smsCode = "123456";
+        debugPrint("code Sent Tetiklendi");
+        var credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: smsCode);
+        await auth.signInWithCredential(credential);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        debugPrint("code auto retrival timeout");
+      },
     );
   }
 
