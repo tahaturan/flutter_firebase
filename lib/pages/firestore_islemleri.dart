@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/widgets/veri_ekle_add_btn.dart';
 import 'package:flutter_firebase/widgets/veri_ekleme_set_btn.dart';
 import 'package:flutter_firebase/widgets/veri_guncelle_btn.dart';
+import 'package:flutter_firebase/widgets/veri_okuma_on_time_btn.dart';
 import 'package:flutter_firebase/widgets/veri_silme_btn.dart';
 
 class FireStoreIslemleri extends StatefulWidget {
@@ -26,6 +27,11 @@ class _FireStoreIslemleriState extends State<FireStoreIslemleri> {
             VeriEklemeSetBtn(),
             VeriGuncellemeBtn(),
             VeriSilmeBtn(),
+            Divider(
+              color: Colors.grey,
+              height: 5,
+            ),
+            VeriOkumaOnTimeBtn(),
           ],
         ),
       ),
