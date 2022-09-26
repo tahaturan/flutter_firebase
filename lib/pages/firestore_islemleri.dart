@@ -3,6 +3,7 @@ import 'package:flutter_firebase/widgets/veri_ekle_add_btn.dart';
 import 'package:flutter_firebase/widgets/veri_ekleme_set_btn.dart';
 import 'package:flutter_firebase/widgets/veri_guncelle_btn.dart';
 import 'package:flutter_firebase/widgets/veri_okuma_on_time_btn.dart';
+import 'package:flutter_firebase/widgets/veri_okuma_real_time_btn.dart';
 import 'package:flutter_firebase/widgets/veri_silme_btn.dart';
 
 class FireStoreIslemleri extends StatefulWidget {
@@ -32,6 +33,7 @@ class _FireStoreIslemleriState extends State<FireStoreIslemleri> {
               height: 5,
             ),
             VeriOkumaOnTimeBtn(),
+            VeriOkumaRealTimeBtn(),
           ],
         ),
       ),
