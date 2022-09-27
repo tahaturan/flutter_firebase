@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/widgets/batch_kavrami_btn.dart';
+import 'package:flutter_firebase/widgets/firebase_storage_btn.dart';
 import 'package:flutter_firebase/widgets/transaction_kavrami_btn.dart';
 import 'package:flutter_firebase/widgets/veri_ekle_add_btn.dart';
 import 'package:flutter_firebase/widgets/veri_ekleme_set_btn.dart';
@@ -40,6 +41,7 @@ class _FireStoreIslemleriState extends State<FireStoreIslemleri> {
             BatchKavramiBtn(),
             TransactionKavramiBtn(),
             VeriSorgulamaBtn(),
+            FireBaseStorageBtn(),
           ],
         ),
       ),
