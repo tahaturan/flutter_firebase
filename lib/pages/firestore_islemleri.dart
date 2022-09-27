@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/widgets/batch_kavrami_btn.dart';
 import 'package:flutter_firebase/widgets/veri_ekle_add_btn.dart';
 import 'package:flutter_firebase/widgets/veri_ekleme_set_btn.dart';
 import 'package:flutter_firebase/widgets/veri_guncelle_btn.dart';
@@ -34,6 +35,7 @@ class _FireStoreIslemleriState extends State<FireStoreIslemleri> {
             ),
             VeriOkumaOnTimeBtn(),
             VeriOkumaRealTimeBtn(),
+            BatchKavramiBtn(),
           ],
         ),
       ),
